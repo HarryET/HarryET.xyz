@@ -1,13 +1,57 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("PLANETSCALE_PRISMA_DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("PLANETSCALE_PRISMA_DATABASE_URL")
   referentialIntegrity = "prisma"
+}
+
+model Project {
+  id          String  @id @default(cuid())
+  name        String
+  url         String?
+  description String
+
+  languages LanguagesOnProjects[]
+  tools     ToolsOnProjects[]
+}
+
+model Language {
+  id          String  @id @default(cuid())
+  name        String
+  url         String?
+  file_format String
+  icon_url    String
+
+  projects LanguagesOnProjects[]
+}
+
+model Tool {
+  id       String @id @default(cuid())
+  name     String
+  url      String
+  icon_url String
+
+  projects ToolsOnProjects[]
+}
+
+model LanguagesOnProjects {
+  project    Project  @relation(fields: [projectId], references: [id])
+  projectId  String // relation scalar field (used in the `@relation` attribute above)
+  language   Language @relation(fields: [languageId], references: [id])
+  languageId String // relation scalar field (used in the `@relation` attribute above)
+
+  @@id([projectId, languageId])
+}
+
+model ToolsOnProjects {
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String // relation scalar field (used in the `@relation` attribute above)
+  tool      Tool    @relation(fields: [toolId], references: [id])
+  toolId    String // relation scalar field (used in the `@relation` attribute above)
+
+  @@id([projectId, toolId])
 }
