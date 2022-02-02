@@ -41,6 +41,12 @@ export const getNowPlaying = async () => {
   return await api.getMyCurrentPlayingTrack();
 };
 
+export const getPlaylist = async (id: string) => {
+  const api = await getApiClient();
+
+  return await api.getPlaylist(id);
+}
+
 export const getTopTracks = async () => {
   const api = await getApiClient();
 

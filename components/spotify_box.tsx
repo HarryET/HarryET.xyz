@@ -1,14 +1,14 @@
-export const SpotifyBox: React.FC<SpotifyApi.CurrentlyPlayingObject> = ({
-    item,
-    is_playing,
-    currently_playing_type,
-    context
-}) => {
+type Args = {
+    nowPlaying: SpotifyApi.CurrentlyPlayingObject,
+    playlist?: SpotifyApi.SinglePlaylistResponse
+};
+
+export const SpotifyBox: React.FC<Args> = (args) => {
+    const item = args.nowPlaying.item;
+
     return (
-        <div>
-            {currently_playing_type == "track" && <SpotifyAlbumBoxContent track={item as SpotifyApi.TrackObjectFull} context={context} />}
-            {currently_playing_type == "episode" && <SpotifyEpisodeBoxContent {...(item as SpotifyApi.EpisodeObject)} />}
-            {currently_playing_type != "track" && currently_playing_type != "episode" && <SpotifyMiscBoxContent />}
+        <div className="bg-slate-800 p-4">
+            {(item != null && item.type == "track" && args.nowPlaying.is_playing) ? <SpotifyAlbumBoxContent {...args} /> : <SpotifyMiscBoxContent />}
         </div>
     )
 }
@@ -17,41 +17,37 @@ const getSpotifyArt = (images: SpotifyApi.ImageObject[]): string | undefined => 
     return images?.sort()[0].url ?? undefined
 }
 
-const SpotifyAlbumBoxContent: React.FC<{
-    track: SpotifyApi.TrackObjectFull,
-    context?: SpotifyApi.ContextObject
-}> = ({
-    track: { name, artists, album },
-    context
-}) => {
-        const names = artists.map((a) => a.name).join(", ")
+const getTimeString = (ms, sep = ':') => {
+    const sign = ~~ms < 0 ? '-' : '';
+    const absMs = Math.abs(~~ms);
+    const [h, m, s] = [1000 * 60 * 60, 1000 * 60, 1000].map(calcMs => ('0' + ~~((absMs / calcMs) % 60)).substr(-2));
+    return `${sign}${parseInt(h, 10) ? `${h}${sep}` : ''}${m}${sep}${s}`;
+}
 
-        return (
-            <div className="flex flex-row items-center">
-                <div className="mr-2">
-                    <img src={getSpotifyArt(album.images)} className="w-20 h-20 rounded-xl" />
-                </div>
-                <div className="flex flex-col">
-                    <p className="font-bold text-gray-900">{name}</p>
-                    <p className="text-sm text-gray-700">{names}</p>
-                </div>
-            </div>
-        );
-    }
-
-const SpotifyEpisodeBoxContent: React.FC<SpotifyApi.EpisodeObject> = ({
-    images,
-    name,
-    show
+const SpotifyAlbumBoxContent: React.FC<Args> = ({
+    nowPlaying: { item },
+    playlist
 }) => {
+    const track = item as SpotifyApi.TrackObjectFull
+    const { name, artists, album, duration_ms } = track;
+
+    const names = artists.map((a) => a.name).join(", ")
+
+    const playlistImages: SpotifyApi.ImageObject[] | null = playlist != null ? playlist.images : null
+
     return (
         <div className="flex flex-row items-center">
-            <div className="mr-2">
-                <img src={getSpotifyArt(images)} className="w-20 h-20 rounded-xl" />
+            <div className="mr-4">
+                <span className="inline-block relative">
+                    <img src={getSpotifyArt(album.images)} className="w-14 h-14 rounded-xl" alt={track.name} />
+                    <span className="absolute bottom-0 right-0 transform translate-y-1.5 translate-x-1.5 block border-2 border-slate-800 rounded">
+                        {playlistImages && <a href={playlist.external_urls.spotify} className="pointer-cursor"><img src={getSpotifyArt(playlistImages)} alt={playlist.name} className="w-6 h-6 rounded bg-red" /></a>}
+                    </span>
+                </span>
             </div>
             <div className="flex flex-col">
-                <p className="font-bold text-gray-900">{name}</p>
-                <p className="text-sm text-gray-700">{show?.name}</p>
+                <p className="font-bold text-gray-200">{name}</p>
+                <p className="text-sm text-gray-500">{names}</p>
             </div>
         </div>
     );
@@ -60,12 +56,17 @@ const SpotifyEpisodeBoxContent: React.FC<SpotifyApi.EpisodeObject> = ({
 const SpotifyMiscBoxContent: React.FC = ({ }) => {
     return (
         <div className="flex flex-row items-center">
-            <div className="mr-2">
-                <img src={""} className="w-20 h-20 rounded-xl" />
+            <div className="mr-4">
+                <span className="inline-block relative">
+                    <img src={"/assets/spotify_logo.png"} className="w-14 h-14 rounded-xl" />
+                    <span className="absolute bottom-0 right-0 transform translate-y-1.5 translate-x-1.5 block border-2 border-slate-800 rounded">
+                        <img src={"/profile_picture.png"} className="w-6 h-6 rounded bg-red" />
+                    </span>
+                </span>
             </div>
             <div className="flex flex-col">
-                <p className="font-bold text-gray-900">Not playing</p>
-                <p className="text-sm text-gray-700"></p>
+                <p className="font-bold text-gray-200">Not playing</p>
+                <p className="text-sm text-gray-500">Inspired by <a href="https://leerob.io" className="underline cursor-pointer">leerob</a></p>
             </div>
         </div>
     );
