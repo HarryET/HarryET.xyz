@@ -1,7 +1,7 @@
+import React from 'react';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import * as fs from 'fs';
 import Markdoc from '@markdoc/markdoc';
-import { Footer } from '../../components/footer';
 
 type StaticParams = { post: string[]; }
 
@@ -31,23 +31,22 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const { post } = context.params
 
     const contents = fs.readFileSync(`./posts/${post}.md`, "utf8")
-    const ast = Markdoc.parse(contents);
-    const content = Markdoc.transform(ast, /* config */);
-    const html = Markdoc.renderers.html(content);
-
     return {
         props: {
             post,
-            contents: html
+            contents
         }
     }
 }
 
 const BlogPost: NextPage<Params> = ({ post, contents }) => {
+    const ast = Markdoc.parse(contents);
+    const content = Markdoc.transform(ast, /* config */);
+
     return (
         <>
-            <div>
-                <div className="prose max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: contents }}></div>
+            <div className="prose max-w-none dark:prose-invert">
+                {Markdoc.renderers.react(content, React, {})}
             </div>
         </>
     );
