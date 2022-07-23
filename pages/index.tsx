@@ -1,25 +1,54 @@
-import type { NextPage } from 'next'
-import Image from 'next/image'
+import type { GetStaticProps, NextPage } from 'next'
+import { Intro } from '../components/intro';
+import { BlogSection, Post } from '../components/sections/blog';
+import { ExperienceSection } from '../components/sections/experience';
+import * as fs from 'fs';
+import { Footer } from '../components/footer';
 
-const Home: NextPage = () => {
+type Props = {
+  posts: Post[];
+}
+
+const Home: NextPage<Props> = ({ posts }) => {
   return (
-    <div className="p-4 sm:p-16 w-full h-full flex flex-col justify-between bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-50">
-      <div className='w-full flex flex-col'>
-        <div>
-          <Image src="https://github.com/harryet.png" alt='My profile picture' width={72} height={72} className="shadow-md" />
-        </div>
-        <h1 className="text-2xl font-bold sm:text-4xl">Harry Bairstow</h1>
-        <p className='text-sm text-gray-600 sm:text-md dark:text-gray-400'>A-Level Computer Science Student</p>
-      </div>
-      <div className='w-full border-t border-gray-300 dark:border-gray-800'>
-        <div className="w-full mt-1 sm:mt-2 flex flex-col space-y-1 text-gray-400 dark:text-gray-600 sm:flex-row sm:space-y-0 sm:space-x-6">
-          <a href="https://github.com/harryet" className='hover:underline hover:text-gray-900 hover:dark:text-gray-200 hover:cursor-pointer'>GitHub</a>
-          <a href="https://twitter.com/theharryet" className='hover:underline hover:text-gray-900 hover:dark:text-gray-200 hover:cursor-pointer'>Twitter</a>
-          <a href="mailto:h.bairstow22@gmail.com" className='hover:underline hover:text-gray-900 hover:dark:text-gray-200 hover:cursor-pointer'>Email</a>
+    <>
+      <div className='w-full flex flex-col space-y-6'>
+        <Intro />
+        <div className='w-full grid grid-cols-2 md:grid-cols-5 gap-6'>
+          <div className="col-span-2">
+            <ExperienceSection />
+          </div>
+          {/* <div className="col-span-2 md:col-span-3">
+            <BlogSection posts={posts} />
+          </div> */}
         </div>
       </div>
-    </div>
+      <div className="w-full mb-6 sm:mb-16">
+        <Footer />
+      </div>
+    </>
   )
+}
+
+export const getStaticProps: GetStaticProps<Props> = (context) => {
+  const posts = fs.readdirSync("./posts")
+
+  return {
+    props: {
+      posts: posts.map((p) => p.replace(".md", "")).map((post) => {
+        const split = post.split("-")
+        const name = split.slice(3, split.length).join("-")
+
+        return {
+          name,
+          title: name.replace("-", " "),
+          day: split[2],
+          month: split[1],
+          year: split[0]
+        }
+      })
+    }
+  }
 }
 
 export default Home

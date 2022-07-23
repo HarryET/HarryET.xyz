@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Rust",
+        "image": "/langs/rust.svg",
+        "url": "https://www.rust-lang.org/",
+        "bg": "#FFFFFF"
+    },
+    {
+        "name": "GoLang",
+        "image": "/langs/go.png",
+        "url": "https://go.dev/"
+    },
+    {
+        "name": "Gleam",
+        "image": "/langs/gleam.png",
+        "url": "https://gleam.run"
+    },
+    {
+        "name": "Typescript",
+        "image": "/langs/typescript.png",
+        "url": "https://www.typescriptlang.org/",
+        "bg": "#3178C6"
+    },
+    {
+        "name": "Dart",
+        "image": "/langs/dart.svg",
+        "url": "https://dart.dev/",
+        "bg": "#FFFFFF"
+    }
+]
