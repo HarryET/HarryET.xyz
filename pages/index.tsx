@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import { Intro } from '../components/intro';
 import { ExperienceSection } from '../components/sections/experience';
-import { Footer } from '../components/footer';
 
 const Home: NextPage = ({ }) => {
   return (

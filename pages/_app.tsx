@@ -12,7 +12,6 @@ function App({ Component, pageProps }: AppProps) {
         <title>Harry Bairstow</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       </Head>
-      <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6af68ce72bd74260a556425735a80a3c"}'></Script>
       <div className="px-8 sm:px-16 w-full h-full flex flex-col justify-between text-gray-900 dark:text-gray-50">
         <div className="space-y-8">
           <div className="w-full mt-6 sm:mt-16">
@@ -26,6 +25,16 @@ function App({ Component, pageProps }: AppProps) {
           <Footer />
         </div>
       </div>
+
+      <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6af68ce72bd74260a556425735a80a3c"}'></Script>
+
+      {/* TODO fix warning */}
+      <link id="syntax-theme" rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.0.1/styles/atom-one-dark.min.css" />
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.0.1/highlight.min.js"></script>
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.0.1/languages/javascript.min.js"></script>
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.0.1/languages/elixir.min.js"></script>
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.0.1/languages/erlang.min.js"></script>
+      <script src="/javascript/highlightjs.js"></script>
     </>
   )
 }

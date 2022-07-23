@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import { Intro } from '../components/intro';
-import { Footer } from '../components/footer';
 import { TechnologySection } from '../components/sections/technologies';
 
 const Home: NextPage = ({ }) => {
