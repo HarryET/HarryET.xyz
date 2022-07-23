@@ -46,9 +46,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 const BlogPost: NextPage<Params> = ({ post, contents }) => {
     return (
         <>
-            <div className="pb-6 sm:pb-16 space-y-12">
+            <div>
                 <div className="prose max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: contents }}></div>
-                <Footer />
             </div>
         </>
     );
