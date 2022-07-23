@@ -1,39 +1,25 @@
-import { GetStaticProps } from 'next';
-import Link from 'next/link';
-import { SpotifyBox } from '../components/spotify_box';
-import { getNowPlaying, getPlaylist } from '../lib/spotify';
+import type { NextPage } from 'next'
+import Image from 'next/image'
 
-export const getStaticProps: GetStaticProps = async () => {
-  const nowPlaying = await getNowPlaying()
-
-  // TODO optimise!
-  let playlist: SpotifyApi.SinglePlaylistResponse | null = null;
-  if (nowPlaying.statusCode !== 204) {
-    if (nowPlaying.body.context.type == "playlist") {
-      const playlistResponse = await getPlaylist(nowPlaying.body.context.uri.replace("spotify:playlist:", ""));
-      if (playlistResponse.statusCode === 200) {
-        playlist = playlistResponse.body
-      }
-    }
-  }
-
-  return {
-    props: {
-      nowPlaying: nowPlaying.statusCode !== 204 ? nowPlaying.body : false,
-      playlist
-    },
-    revalidate: 60
-  }
+const Home: NextPage = () => {
+  return (
+    <div className="p-4 sm:p-16 w-full h-full flex flex-col justify-between bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-50">
+      <div className='w-full flex flex-col'>
+        <div>
+          <Image src="https://github.com/harryet.png" alt='My profile picture' width={72} height={72} className="shadow-md" />
+        </div>
+        <h1 className="text-2xl font-bold sm:text-4xl">Harry Bairstow</h1>
+        <p className='text-sm text-gray-600 sm:text-md dark:text-gray-400'>A-Level Computer Science Student</p>
+      </div>
+      <div className='w-full border-t border-gray-300 dark:border-gray-800'>
+        <div className="w-full mt-1 sm:mt-2 flex flex-col space-y-1 text-gray-400 dark:text-gray-600 sm:flex-row sm:space-y-0 sm:space-x-6">
+          <a href="https://github.com/harryet" className='hover:underline hover:text-gray-900 hover:dark:text-gray-200 hover:cursor-pointer'>GitHub</a>
+          <a href="https://twitter.com/theharryet" className='hover:underline hover:text-gray-900 hover:dark:text-gray-200 hover:cursor-pointer'>Twitter</a>
+          <a href="mailto:h.bairstow22@gmail.com" className='hover:underline hover:text-gray-900 hover:dark:text-gray-200 hover:cursor-pointer'>Email</a>
+        </div>
+      </div>
+    </div>
+  )
 }
 
-const IndexPage = ({ nowPlaying, playlist }: { nowPlaying: SpotifyApi.CurrentlyPlayingResponse | false, playlist: SpotifyApi.SinglePlaylistResponse | null }) => (
-  <div className='w-full h-full bg-slate-700 flex flex-col justify-center items-center'>
-    {nowPlaying && <div className='bg-slate-900 p-2'>
-      <p className='text-white uppercase font-bold mb-2'>Now Listening To</p>
-      <SpotifyBox nowPlaying={nowPlaying} playlist={playlist} />
-    </div>}
-    <p className='text-gray-500 mt-6 text-sm'>This is a WIP portfolio website by <a href="https://twitter.com/TheHarryET" className='underline'>Harry Bairstow</a></p>
-  </div>
-)
-
-export default IndexPage
+export default Home
