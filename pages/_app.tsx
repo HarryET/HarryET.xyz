@@ -22,7 +22,7 @@ function App({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </div>
         </div>
-        <div className="w-full mb-6 sm:mb-16">
+        <div className="w-full mb-6 sm:mb-16 mt-8">
           <Footer />
         </div>
       </div>
