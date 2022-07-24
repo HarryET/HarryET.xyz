@@ -2,6 +2,7 @@ import React from 'react';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import * as fs from 'fs';
 import Markdoc from '@markdoc/markdoc';
+import { Fence, markdocFence } from '../../components/markdoc/codeFence';
 
 type StaticParams = { post: string[]; }
 
@@ -41,12 +42,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 const BlogPost: NextPage<Params> = ({ post, contents }) => {
     const ast = Markdoc.parse(contents);
-    const content = Markdoc.transform(ast, /* config */);
+    const content = Markdoc.transform(ast, {
+        nodes: {
+            fence: markdocFence
+        }
+    });
 
     return (
         <>
             <div className="prose max-w-none dark:prose-invert">
-                {Markdoc.renderers.react(content, React, {})}
+                {Markdoc.renderers.react(content, React, {
+                    components: {
+                        Fence
+                    }
+                })}
             </div>
         </>
     );
