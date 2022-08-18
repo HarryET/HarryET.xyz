@@ -5,10 +5,11 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { Footer } from '../components/footer'
 import { Navbar } from '../components/navbar'
+import PlausibleProvider from 'next-plausible'
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <PlausibleProvider domain='harryet.xyz' enabled={!process.env.DEV}>
       <Head>
         <title>Harry Bairstow</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
@@ -28,7 +29,7 @@ function App({ Component, pageProps }: AppProps) {
       </div>
 
       <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6af68ce72bd74260a556425735a80a3c"}'></Script>
-    </>
+    </PlausibleProvider>
   )
 }
 
