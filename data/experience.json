@@ -3,9 +3,17 @@
         "company": "WalletConnect",
         "img": "/companies/walletconnect.png",
         "url": "https://walletconnect.com/",
+        "title": "Rust Engineer",
+        "from": "Sep 2022",
+        "to": "Now"
+    },
+    {
+        "company": "WalletConnect",
+        "img": "/companies/walletconnect.png",
+        "url": "https://walletconnect.com/",
         "title": "Software Engineering Intern",
         "from": "Jun 2022",
-        "to": "Now"
+        "to": "Sep 2022"
     },
     {
         "company": "CBN Expert",
