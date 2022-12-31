@@ -1,8 +1,8 @@
-import React from 'react';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import * as fs from 'fs';
-import Markdoc from '@markdoc/markdoc';
-import { Fence, markdocFence } from '../../components/markdoc/codeFence';
+import ReactMarkdown from 'react-markdown'
+import yaml from 'js-yaml'
+import rehypeRaw from "rehype-raw";
 
 type StaticParams = { post: string[]; }
 
@@ -22,7 +22,8 @@ export const getStaticPaths: GetStaticPaths<StaticParams> = () => {
     }
 }
 
-type Params = { post: string; contents: string; }
+type Params = { post: string; contents: string; meta: PostMeta; }
+export type PostMeta = { title: string; tags: string[]; date: string; }
 
 export const getStaticProps: GetStaticProps = async (context) => {
     if (!context.params) {
@@ -31,33 +32,28 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     const { post } = context.params
 
-    const contents = fs.readFileSync(`./posts/${post}.md`, "utf8")
+    const rawContents = fs.readFileSync(`./posts/${post}.md`, "utf8")
+    const rawMeta = rawContents.split("---")[0];
+    const meta = yaml.load(rawMeta) as PostMeta;
+    const contents = rawContents.split("---")[1];
+
     return {
         props: {
             post,
-            contents
+            contents,
+            meta
         }
     }
 }
 
-const BlogPost: NextPage<Params> = ({ post, contents }) => {
-    const ast = Markdoc.parse(contents);
-    const content = Markdoc.transform(ast, {
-        nodes: {
-            fence: markdocFence
-        }
-    });
-
+const BlogPost: NextPage<Params> = ({ contents }) => {
     return (
-        <>
-            <div className="prose max-w-none dark:prose-invert">
-                {Markdoc.renderers.react(content, React, {
-                    components: {
-                        Fence
-                    }
-                })}
-            </div>
-        </>
+        // TODO add title and date
+        <ReactMarkdown
+            rehypePlugins={[rehypeRaw]}
+            className="prose max-w-none dark:prose-invert">
+            {contents}
+        </ReactMarkdown>
     );
 }
 

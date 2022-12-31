@@ -3,6 +3,8 @@ import { Intro } from '../../components/intro';
 import { BlogSection, Post } from '../../components/sections/blog';
 import * as fs from 'fs';
 import { Footer } from '../../components/footer';
+import yaml from 'js-yaml'
+import { PostMeta } from './[...post]';
 
 type Props = {
     posts: Post[];
@@ -26,16 +28,15 @@ export const getStaticProps: GetStaticProps<Props> = (context) => {
 
     return {
         props: {
-            posts: posts.map((p) => p.replace(".md", "")).map((post) => {
-                const split = post.split("-")
-                const name = split.slice(3, split.length).join("-")
+            posts: posts.map((p) => [p.replace(".md", ""), fs.readFileSync(`./posts/${p}`, "utf8")]).map(([name, rawContents]) => {
+                const rawMeta = rawContents.split("---")[0];
+                const meta = yaml.load(rawMeta) as PostMeta;
+                const contents = rawContents.split("---")[1];
 
                 return {
-                    name,
-                    title: name.replace("-", " "),
-                    day: split[2],
-                    month: split[1],
-                    year: split[0]
+                    name: name,
+                    title: meta.title,
+                    date: meta.date
                 }
             })
         }

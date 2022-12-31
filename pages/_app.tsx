@@ -14,16 +14,16 @@ function App({ Component, pageProps }: AppProps) {
         <title>Harry Bairstow</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       </Head>
-      <div className="px-8 sm:px-16 w-full h-full flex flex-col justify-between text-gray-900 dark:text-gray-50">
+      <div className="px-8 sm:px-16 py-6 sm:py-16 w-full h-full flex flex-col justify-between text-gray-900 dark:text-gray-50">
         <div className="space-y-8">
-          <div className="w-full mt-6 sm:mt-16">
+          <div className="w-full">
             <Navbar />
           </div>
           <div className='w-full flex flex-col space-y-6'>
             <Component {...pageProps} />
           </div>
         </div>
-        <div className="w-full mb-6 sm:mb-16 mt-8">
+        <div className="w-full pt-8 pb-8">
           <Footer />
         </div>
       </div>
