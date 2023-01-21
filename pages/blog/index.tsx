@@ -14,10 +14,8 @@ const BlogHome: NextPage<Props> = ({ posts }) => {
     return (
         <>
             <Intro />
-            <div className='w-full grid grid-cols-2 md:grid-cols-5 gap-6'>
-                <div className="col-span-2 md:col-span-3">
-                    <BlogSection posts={posts} />
-                </div>
+            <div className='w-full h-full'>
+                <BlogSection posts={posts} />
             </div>
         </>
     )

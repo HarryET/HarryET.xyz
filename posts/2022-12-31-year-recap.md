@@ -1,4 +1,5 @@
 title: '2022 Year Recap'
+banner: 'default'
 date: '2022-12-31'
 tags:
     - 'recap'
