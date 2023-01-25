@@ -18,7 +18,7 @@ type Props = {
 }
 
 export const BlogSection: React.FC<Props> = ({ posts }) => {
-    const sorted_posts = posts.sort((objA, objB) => new Date(objB.date).getTime() - new Date(objA.date).getTime()).filter((v, _index) => new Date(v.date).getTime() > Date.now());
+    const sorted_posts = posts.sort((objA, objB) => new Date(objA.date).getTime() - new Date(objB.date).getTime());
 
     return (
         <div className='w-full h-full'>

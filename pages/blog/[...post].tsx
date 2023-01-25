@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import ReactMarkdown from 'react-markdown'
 import yaml from 'js-yaml'
 import rehypeRaw from "rehype-raw";
+import { Post } from '../../components/sections/blog';
 
 type StaticParams = { post: string[]; }
 
@@ -23,7 +24,7 @@ export const getStaticPaths: GetStaticPaths<StaticParams> = () => {
 }
 
 type Params = { post: string; contents: string; meta: PostMeta; }
-export type PostMeta = { title: string; tags: string[]; date: string; }
+export type PostMeta = Omit<Post, "name">
 
 export const getStaticProps: GetStaticProps = async (context) => {
     if (!context.params) {

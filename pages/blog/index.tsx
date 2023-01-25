@@ -33,8 +33,7 @@ export const getStaticProps: GetStaticProps<Props> = (context) => {
 
                 return {
                     name: name,
-                    title: meta.title,
-                    date: meta.date
+                    ...meta
                 }
             })
         }
