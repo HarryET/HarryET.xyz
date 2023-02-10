@@ -1,0 +1,36 @@
+---
+const { images }: { images: string[] } = Astro.props;
+---
+
+<div class="overflow-hidden">
+    <div class="flex -mx-4 img-ticker">
+        <!-- Original set of images -->
+        {
+            images.map((image) => (
+                <img class="w-64 mx-4 self-start flex-none" src={image} />
+            ))
+        }
+        <!-- Copy set of images -->
+        {
+            images.map((image) => (
+                <img class="w-64 mx-4 self-start flex-none" src={image} />
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    @keyframes ticker-kf {
+        0% {
+            transform: translate3d(0, 0, 0);
+        }
+
+        100% {
+            transform: translate3d(-108rem, 0, 0);
+        }
+    }
+
+    .img-ticker {
+        animation: ticker-kf 18s linear infinite;
+    }
+</style>

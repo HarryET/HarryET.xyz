@@ -1,5 +1,6 @@
 ---
 import ArrowDown from 'astro-heroicons/solid/ArrowDown.astro';
+import Ticker from '../components/ticker.astro';
 ---
 <div class="w-full h-full flex flex-col bg-bg">
 	<!-- Blobs -->
@@ -19,4 +20,14 @@ import ArrowDown from 'astro-heroicons/solid/ArrowDown.astro';
 		<div class="min-h-screen w-full bg-[url('/assets/blobs.svg')] bg-center"></div>
 	</div>
 	<!-- Content -->
+	<div class="my-6">
+		<Ticker images={[
+			"/assets/logos/wc.svg",
+			"/assets/logos/wc.svg",
+			"/assets/logos/wc.svg",
+			"/assets/logos/wc.svg",
+			"/assets/logos/wc.svg",
+			"/assets/logos/wc.svg",
+		]} />
+	</div>
 </div>
