@@ -1,19 +1,21 @@
 ---
-const { images }: { images: string[] } = Astro.props;
+const { images, ltr }: { images: string[], ltr?: boolean } = Astro.props;
+
+const tickerClass = ltr ? 'img-ticker-ltr' : 'img-ticker';
 ---
 
 <div class="overflow-hidden">
-    <div class="flex -mx-4 img-ticker">
+    <div class={`flex -mx-4 ${tickerClass}`}>
         <!-- Original set of images -->
         {
             images.map((image) => (
-                <img class="w-64 mx-4 self-start flex-none" src={image} />
+                <img class="h-12 w-auto mx-4 self-start flex-none" src={image} />
             ))
         }
         <!-- Copy set of images -->
         {
             images.map((image) => (
-                <img class="w-64 mx-4 self-start flex-none" src={image} />
+                <img class="h-12 w-auto mx-4 self-start flex-none" src={image} />
             ))
         }
     </div>
@@ -26,11 +28,25 @@ const { images }: { images: string[] } = Astro.props;
         }
 
         100% {
-            transform: translate3d(-108rem, 0, 0);
+            transform: translate3d(-100rem, 0, 0);
+        }
+    }
+
+    @keyframes ticker-ltr-kf {
+        0% {
+            transform: translate3d(-100rem, 0, 0);
+        }
+
+        100% {
+            transform: translate3d(0, 0, 0);
         }
     }
 
     .img-ticker {
         animation: ticker-kf 18s linear infinite;
+    }
+
+    .img-ticker-ltr {
+        animation: ticker-ltr-kf 18s linear infinite;
     }
 </style>
