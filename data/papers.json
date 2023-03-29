@@ -1,0 +1,24 @@
+[
+    {
+        "name": "Private Set Intersection for Privacy Preserving Comparisons",
+        "description": "Exploring the topic of Private Set Intersection and how it can be used to make privacy preserving comparisons.",
+        "authors": [
+            {
+                "name": "Harry Bairstow",
+                "github": "harryet"
+            }
+        ],
+        "download_url": "/papers/private-set-intersection.pdf"
+    },
+    {
+        "name": "Designing Distributed Systems that Scale",
+        "description": "A research project on distributed systems and what is done to ensure they can scale safely.",
+        "authors": [
+            {
+                "name": "Harry Bairstow",
+                "github": "harryet"
+            }
+        ],
+        "download_url": "/papers/designing-distributed-systems0that-scale.pdf"
+    }
+]
