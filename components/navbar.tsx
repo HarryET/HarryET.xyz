@@ -9,11 +9,6 @@ export const Navbar: React.FC<{}> = () => {
                         Home
                     </p>
                 </Link>
-                <Link href="/technologies">
-                    <p className='hover:underline hover:text-gray-900 hover:dark:text-gray-200 hover:cursor-pointer'>
-                        Technologies
-                    </p>
-                </Link>
                 <Link href="/blog" >
                     <p className='hover:underline hover:text-gray-900 hover:dark:text-gray-200 hover:cursor-pointer'>
                         Blog
