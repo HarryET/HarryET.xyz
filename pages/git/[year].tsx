@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import * as fs from 'fs';
 
-type StaticParams = { year: string[]; }
+type StaticParams = { year: string; }
 
 export const getStaticPaths: GetStaticPaths<StaticParams> = () => {
     const posts = fs.readdirSync("./git")
