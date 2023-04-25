@@ -6,6 +6,7 @@ export type Post = {
     date: string;
     banner: string;
     tags: string[];
+    published: boolean;
     author?: {
         name: string;
         avatar: string;
@@ -24,7 +25,7 @@ export const BlogSection: React.FC<Props> = ({ posts }) => {
         <div className='w-full h-full'>
             <h1 className="text-lg font-bold sm:text-2xl">Recent Blog Posts</h1>
             <div className="grid grid-cols-3 gap-6">
-                {sorted_posts.map(({ title, name, date, author, tags }, i) => (
+                {sorted_posts.filter(({ published }) => published).map(({ title, name, date, author, tags }, i) => (
                     <a key={i} href={`/blog/${name}`} className="rounded-md w-full h-full">
                         <div className="flex flex-col">
                             <h1>{title}</h1>
