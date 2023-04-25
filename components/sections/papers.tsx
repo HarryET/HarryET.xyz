@@ -1,4 +1,4 @@
-import papers from '../../data/papers.json';
+import papers from '../../public/data/papers.json';
 import Image from "next/image";
 
 export const PapersSection: React.FC = () => {

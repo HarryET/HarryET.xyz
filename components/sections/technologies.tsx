@@ -1,4 +1,4 @@
-import langs from '../../data/langs.json';
+import langs from '../../public/data/langs.json';
 import Image from "next/image";
 
 export const TechnologySection: React.FC = () => {

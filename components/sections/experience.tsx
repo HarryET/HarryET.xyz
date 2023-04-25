@@ -1,4 +1,4 @@
-import experiences from '../../data/experience.json';
+import experiences from '../../public/data/experience.json';
 import Image from "next/image";
 
 export const ExperienceSection: React.FC = () => {

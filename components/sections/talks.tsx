@@ -1,4 +1,4 @@
-import talks from '../../data/talks.json';
+import talks from '../../public/data/talks.json';
 
 export const TalksSection: React.FC = () => {
     return (
