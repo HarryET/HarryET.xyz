@@ -4,19 +4,21 @@
         "event": "FOSDEM'23",
         "url": "https://fosdem.org/2023/schedule/event/beam_gleam_intro/",
         "date": "05/02/2023",
-        "status": "UPLOADED"
+        "status": "UPLOADED",
+        "img_url": "/assets/talks/fosdem.jpeg"
     },
     {
         "name": "Bringing Web2 Specifications into Web3",
         "event": "EthPrague",
-        "url": null,
+        "url": "https://www.youtube.com/watch?v=xPeNGhtpqbg",
         "date": "09/06/2023",
-        "status": "UPCOMING"
+        "status": "UPLOADED",
+        "img_url": "/assets/talks/ethprague.jpeg"
     },
     {
         "name": "Building secure distributed Webhooks",
         "event": "EthCC [6]",
-        "url": null,
+        "url": "https://twitter.com/EthCC/status/1672245122895847424",
         "date": "17/07/2023",
         "status": "UPCOMING"
     }

@@ -8,7 +8,8 @@
                 "github": "harryet"
             }
         ],
-        "download_url": "/papers/private-set-intersection.pdf"
+        "download_url": "/papers/private-set-intersection.pdf",
+        "img_url": "/assets/papers/private-set-intersection.jpeg"
     },
     {
         "name": "Designing Distributed Systems that Scale",
@@ -19,6 +20,7 @@
                 "github": "harryet"
             }
         ],
-        "download_url": "/papers/designing-distributed-systems-that-scale.pdf"
+        "download_url": "/papers/designing-distributed-systems-that-scale.pdf",
+        "img_url": "/assets/papers/distributed-systems-1.jpeg"
     }
 ]
