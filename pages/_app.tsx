@@ -3,9 +3,6 @@ import '../styles/highlight-js.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
-import { Footer } from '../components/footer'
-import { Navbar } from '../components/navbar'
-import PlausibleProvider from 'next-plausible'
 
 function App({ Component, pageProps }: AppProps) {
   return (

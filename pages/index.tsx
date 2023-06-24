@@ -51,20 +51,20 @@ const KindPill: React.FC<{ kind: "talk" | "blog" | "paper" }> = ({ kind }) => {
   switch (kind) {
     case "talk":
       return (
-        <div className={`inline-flex items-center px-2 py-1 text-xs font-medium ring-1 ring-inset bg-green-500/10 text-green-500 ring-green-500/20`}>
+        <div className={`inline-flex items-center px-2 py-1 text-xs font-medium ring-1 ring-inset bg-fuchsia-500/20 text-fuchsia-500 ring-fuchsia-500/20`}>
           {kind.toUpperCase()}
         </div>
       )
     case "blog":
       return (
-        <div className={`inline-flex items-center px-2 py-1 text-xs font-medium ring-1 ring-inset bg-blue-500/10 text-blue-500 ring-blue-500/20`}>
+        <div className={`inline-flex items-center px-2 py-1 text-xs font-medium ring-1 ring-inset bg-blue-500/20 text-blue-500 ring-blue-500/20`}>
           {kind.toUpperCase()}
         </div>
       )
 
     case "paper":
       return (
-        <div className={`inline-flex items-center px-2 py-1 text-xs font-medium ring-1 ring-inset bg-yellow-500/10 text-yellow-500 ring-yellow-500/20`}>
+        <div className={`inline-flex items-center px-2 py-1 text-xs font-medium ring-1 ring-inset bg-yellow-500/20 text-yellow-500 ring-yellow-500/20`}>
           {kind.toUpperCase()}
         </div>
       )
@@ -73,19 +73,23 @@ const KindPill: React.FC<{ kind: "talk" | "blog" | "paper" }> = ({ kind }) => {
 
 const ContentEntry: React.FC<Content> = ({ image, title, author, link, kind }) => {
   return (
-    <a className='flex flex-col max-w-xl hover:cursor-pointer hover:bg-gray-50' href={link}>
-      <img className='w-full h-auto' src={image ?? randomGeneric()} />
-      <div className='h-full flex flex-col justify-between pt-4 px-4'>
-        <div>
-          <h3>{title}</h3>
-          <p className='text-gray-500'>{author}</p>
+    <div className='w-full h-full relative'>
+      <a className='flex flex-col max-w-xl hover:cursor-pointer hover:bg-gray-50' href={link}>
+        <div className='relative w-full h-auto'>
+          <img className='w-full h-auto' src={image ?? randomGeneric()} />
+          <div className='absolute bottom-2 right-2 z-10'>
+            <KindPill kind={kind} />
+          </div>
         </div>
-        <div className='-translate-y-[24px] flex flex-row justify-between'>
-          <div></div>
-          <KindPill kind={kind} />
+        <div className='h-full flex flex-col justify-between p-4'>
+          <div>
+            <h3>{title}</h3>
+            <p className='text-gray-500'>{author}</p>
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
+      {link == undefined && (<div className='absolute top-0 left-0 z-10 bg-opacity-50 bg-gray-800 text-red-500 font-bold text-xl w-full h-full flex justify-center items-center'>[PENDING]</div>)}
+    </div>
   )
 }
 
@@ -93,7 +97,7 @@ type Content = {
   image: string | undefined,
   title: string,
   author: string,
-  link: string,
+  link: string | undefined,
   kind: "talk" | "blog" | "paper"
 }
 
@@ -115,7 +119,7 @@ const findContent = (): Content[] => {
       image: talk.img_url,
       title: talk.name,
       author: "Harry Bairstow",
-      link: talk.url,
+      link: talk.url ?? undefined,
       kind: "talk"
     })
   }
@@ -138,12 +142,12 @@ const Home: NextPage = ({ }) => {
         </div>
       </div>
 
-      <div id="images" className='w-full flex flex-row gap-6 overflow-x-hidden'>
+      <div id="images" className='w-full flex flex-row gap-6 overflow-x-scroll no-scrollbar'>
         <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/prague_ens_booth.jpeg' />
-        <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/bru_plane.jpeg' />
-        <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/bru_airport.jpeg' />
-        <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/speaker_img.jpeg' />
         <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/drone_northwhich.jpeg' />
+        <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/bru_plane.jpeg' />
+        <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/speaker_img.jpeg' />
+        <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/bru_airport.jpeg' />
       </div>
 
       <div id="jobs" className='w-full flex flex-col space-y-6 lg:space-y-0 lg:flex-row lg:justify-between'>

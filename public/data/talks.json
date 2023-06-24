@@ -18,8 +18,9 @@
     {
         "name": "Building secure distributed Webhooks",
         "event": "EthCC [6]",
-        "url": "https://twitter.com/EthCC/status/1672245122895847424",
+        "url": null,
         "date": "17/07/2023",
-        "status": "UPCOMING"
+        "status": "UPCOMING",
+        "img_url": "/assets/talks/ethcc.jpeg"
     }
 ]
