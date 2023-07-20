@@ -164,6 +164,8 @@ const Home: NextPage<{ content: Content[] }> = ({ content }) => {
       </div>
 
       <div id="images" className='w-full flex flex-row gap-6 overflow-x-scroll no-scrollbar'>
+        <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/paris_lift_polaroid.jpg' />
+        <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/ledger_vierzon.jpg' />
         <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/prague_ens_booth.jpeg' />
         <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/drone_northwhich.jpeg' />
         <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/bru_plane.jpeg' />
