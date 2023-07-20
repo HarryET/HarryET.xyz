@@ -1,10 +1,12 @@
 title: '2022 Year Recap'
-banner: 'default'
 date: '2022-12-31'
 image: '/assets/blog/img/wc_ethlisbon.jpg'
 tags:
     - 'recap'
     - '2022'
+author:
+    name: Harry Bairstow
+    image: /avatar.png
 published: true
 ---
 # 2022 Recap

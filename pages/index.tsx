@@ -1,19 +1,15 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
+import * as fs from 'fs';
+import yaml from 'js-yaml'
 
 import papers from "../public/data/papers.json"
 import talks from "../public/data/talks.json"
+import { PostMeta } from './blog/[...post]';
 
 const jb_mono = JetBrains_Mono({ subsets: ['latin'] })
 
-let generics = [
-  "/assets/generic/1.jpeg",
-  "/assets/generic/2.jpeg",
-  "/assets/generic/3.jpeg",
-  "/assets/generic/4.jpeg",
-  "/assets/generic/5.jpeg",
-  "/assets/generic/6.jpeg",
-];
+let generics: string[] = [];
 
 // Get a random unique generic image, if we run out of images, reset the list
 const randomGeneric = () => {
@@ -74,7 +70,7 @@ const KindPill: React.FC<{ kind: "talk" | "blog" | "paper" }> = ({ kind }) => {
 const ContentEntry: React.FC<Content> = ({ image, title, author, link, kind }) => {
   return (
     <div className='w-full h-full relative'>
-      <a className='flex flex-col max-w-xl hover:cursor-pointer hover:bg-gray-50' href={link}>
+      <a className='flex flex-col max-w-xl hover:cursor-pointer hover:bg-gray-50' href={link ?? undefined}>
         <div className='relative w-full h-auto'>
           <img className='w-full h-auto' src={image ?? randomGeneric()} />
           <div className='absolute bottom-2 right-2 z-10'>
@@ -94,10 +90,10 @@ const ContentEntry: React.FC<Content> = ({ image, title, author, link, kind }) =
 }
 
 type Content = {
-  image: string | undefined,
+  image?: string,
   title: string,
   author: string,
-  link: string | undefined,
+  link?: string,
   kind: "talk" | "blog" | "paper"
 }
 
@@ -124,12 +120,37 @@ const findContent = (): Content[] => {
     })
   }
 
+  fs.readdirSync("./posts").map((p) => [p.replace(".md", ""), fs.readFileSync(`./posts/${p}`, "utf8")]).map(([name, rawContents]) => {
+    const rawMeta = rawContents.split("---")[0];
+    const meta = yaml.load(rawMeta) as PostMeta;
+    const contents = rawContents.split("---")[1];
+
+    return [name, meta, contents] as [string, PostMeta, string]
+  }).filter(([_name, meta, _contents]) => meta.published).forEach(([name, meta, contents]) => {
+    content.push({
+      image: meta.image,
+      title: meta.title,
+      author: meta.author?.name ?? "Unknown Author",
+      link: `/posts/${name}`,
+      kind: "blog"
+    })
+  })
+
   // TODO blog posts
 
   return content;
 }
 
-const Home: NextPage = ({ }) => {
+export const getStaticProps: GetStaticProps = async () => {
+  const content = findContent()
+  return {
+    props: {
+      content
+    }
+  }
+}
+
+const Home: NextPage<{ content: Content[] }> = ({ content }) => {
   return (
     <div className={`flex flex-col items-start p-12 space-y-12 text-gray-900 ${jb_mono.className}`}>
       <div id="intro" className='space-y-4'>
@@ -152,12 +173,12 @@ const Home: NextPage = ({ }) => {
 
       <div id="jobs" className='w-full flex flex-col space-y-6 lg:space-y-0 lg:flex-row lg:justify-between'>
         <Job img="/assets/jobs/walletconnect.svg" link="https://walletconnect.com" company='WalletConnect' title="Distributed Systems Engineer" />
-        <Job img="/assets/jobs/v3x.svg" link="https://v3x.company" company='V3X Labs' title="Research & Development" />
+        {/* <Job img="/assets/jobs/v3x.svg" link="https://v3x.company" company='V3X Labs' title="Research & Development" /> */}
         <Job img="/assets/jobs/swift.svg" link="https://swift.eco" company='Swift.eco' title="Staff Software Engineer" />
       </div>
 
       <div id="content" className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-        {findContent().map((c, i) => <ContentEntry key={i} {...c} />)}
+        {content.map((c, i) => <ContentEntry key={i} {...c} />)}
       </div>
 
       <footer className='w-full flex flex-col space-y-4 md:space-y-0 md:flex-row md:justify-between'>

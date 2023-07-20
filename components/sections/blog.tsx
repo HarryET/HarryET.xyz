@@ -4,7 +4,7 @@ export type Post = {
     name: string;
     title: string;
     date: string;
-    banner: string;
+    image?: string;
     tags: string[];
     published: boolean;
     author?: {
