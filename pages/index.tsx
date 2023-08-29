@@ -134,7 +134,7 @@ const findContent = (): Content[] => {
       image: meta.image,
       title: meta.title,
       author: meta.author?.name ?? "Unknown Author",
-      link: `/posts/${name}`,
+      link: `/blog/${name}`,
       kind: "blog",
       published_at: meta.date
     })

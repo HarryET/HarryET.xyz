@@ -6,7 +6,8 @@ tags:
     - '2022'
 author:
     name: Harry Bairstow
-    image: /avatar.png
+    title: Systems Engineer
+    avatar: /avatar.jpg
 published: true
 ---
 # 2022 Recap
