@@ -40,7 +40,7 @@ export default async function incr(req: NextRequest): Promise<NextResponse> {
 			ex: 24 * 60 * 60,
 		});
 		if (!isNew) {
-			new NextResponse(null, { status: 202 });
+			return new NextResponse(null, { status: 202 });
 		}
 	}
 	await redis.incr(["pageviews", slug].join(":"));
