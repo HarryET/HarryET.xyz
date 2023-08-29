@@ -3,7 +3,7 @@
         "name": "Introduction to Gleam",
         "event": "FOSDEM'23",
         "url": "https://fosdem.org/2023/schedule/event/beam_gleam_intro/",
-        "date": "05/02/2023",
+        "date": "2023-02-05",
         "status": "UPLOADED",
         "img_url": "/assets/talks/fosdem.jpeg"
     },
@@ -11,7 +11,7 @@
         "name": "Bringing Web2 Specifications into Web3",
         "event": "EthPrague",
         "url": "https://www.youtube.com/watch?v=xPeNGhtpqbg",
-        "date": "09/06/2023",
+        "date": "2023-06-09",
         "status": "UPLOADED",
         "img_url": "/assets/talks/ethprague.jpeg"
     },
@@ -19,7 +19,7 @@
         "name": "Building secure distributed Webhooks",
         "event": "EthCC [6]",
         "url": "https://www.youtube.com/watch?v=01o9aA5ezpg",
-        "date": "17/07/2023",
+        "date": "2023-07-17",
         "status": "UPLOADED",
         "img_url": "/assets/talks/ethcc.jpg"
     }

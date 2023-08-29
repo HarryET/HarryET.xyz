@@ -94,7 +94,8 @@ type Content = {
   title: string,
   author: string,
   link?: string,
-  kind: "talk" | "blog" | "paper"
+  kind: "talk" | "blog" | "paper",
+  published_at: string,
 }
 
 const findContent = (): Content[] => {
@@ -106,7 +107,8 @@ const findContent = (): Content[] => {
       title: paper.name,
       author: "Harry Bairstow",
       link: paper.download_url,
-      kind: "paper"
+      kind: "paper",
+      published_at: paper.published_at
     })
   }
 
@@ -116,7 +118,8 @@ const findContent = (): Content[] => {
       title: talk.name,
       author: "Harry Bairstow",
       link: talk.url ?? undefined,
-      kind: "talk"
+      kind: "talk",
+      published_at: talk.date
     })
   }
 
@@ -132,13 +135,12 @@ const findContent = (): Content[] => {
       title: meta.title,
       author: meta.author?.name ?? "Unknown Author",
       link: `/posts/${name}`,
-      kind: "blog"
+      kind: "blog",
+      published_at: meta.date
     })
   })
 
-  // TODO blog posts
-
-  return content;
+  return content.sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime())
 }
 
 export const getStaticProps: GetStaticProps = async () => {
