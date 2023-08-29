@@ -8,7 +8,7 @@ author:
     name: Harry Bairstow
     title: Systems Engineer
     avatar: /avatar.jpg
-published: true
+published: false
 ---
 # Goodbye WalletConnect
 
