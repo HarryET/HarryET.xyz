@@ -2079,6 +2079,11 @@ next-plausible@^3.2.0:
   resolved "https://registry.yarnpkg.com/next-plausible/-/next-plausible-3.2.0.tgz#d801346253e0c1cf64a02b9fc3a42050455cbc47"
   integrity sha512-OlYcLXBG3kKd/fKMpm8SZ5IkUKSFm1/8t7cv6e5bewIqlpdZpdWuSrjbdJpbmutb2KPLXHzilKp09zmDGjy9KQ==
 
+next-seo@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-6.1.0.tgz#b60b06958cc77e7ed56f0a61b2d6cd0afed88ebb"
+  integrity sha512-iMBpFoJsR5zWhguHJvsoBDxDSmdYTHtnVPB1ij+CD0NReQCP78ZxxbdL9qkKIf4oEuZEqZkrjAQLB0bkII7RYA==
+
 next@^13.2.4:
   version "13.2.4"
   resolved "https://registry.yarnpkg.com/next/-/next-13.2.4.tgz#2363330392b0f7da02ab41301f60857ffa7f67d6"
@@ -2467,6 +2472,11 @@ readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
+
+reading-time-estimator@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/reading-time-estimator/-/reading-time-estimator-1.9.0.tgz#d9cc403618da5f7adc7883989b51fe30a98ffc4f"
+  integrity sha512-fVuTlAfcYXE9A4KrTOq0Ao4vn9vJxYVFpATjS6KFA5xCK5RTmq6q74ICrO7ykF3Mg2XTgL9mBrwADgXQgEolIw==
 
 regenerator-runtime@^0.13.4:
   version "0.13.9"
