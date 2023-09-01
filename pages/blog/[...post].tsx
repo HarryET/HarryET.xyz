@@ -1,6 +1,5 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import * as fs from 'fs';
-import ReactMarkdown from 'react-markdown'
 import yaml from 'js-yaml'
 import rehypeRaw from "rehype-raw";
 import { Post } from '../../components/sections/blog';
@@ -9,6 +8,8 @@ import { ReportView } from '../../components/trackView';
 import { Redis } from '@upstash/redis';
 import { NextSeo } from 'next-seo';
 import { readingTime } from 'reading-time-estimator'
+import Markdoc from '@markdoc/markdoc';
+import React from 'react';
 
 const jb_mono = JetBrains_Mono({ subsets: ['latin'] })
 const inter = Inter({ subsets: ['latin'] })
@@ -63,6 +64,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 const BlogPost: NextPage<Params> = ({ post, contents, meta, view_count, read_time }) => {
+    const ast = Markdoc.parse(contents);
+    const content = Markdoc.transform(ast, {});
+    const components = {};
+
     return (
         <>
             <NextSeo title={`${meta.title} ${meta.author ? `by ${meta.author.name}` : '| Harry Bairstow'}`} />
@@ -74,7 +79,7 @@ const BlogPost: NextPage<Params> = ({ post, contents, meta, view_count, read_tim
                         <div className='text-gray-500 flex flex-col space-y-1 lg:flex-row lg:space-y-0 lg:space-x-4'>
                             <p>16.</p>
                             <p>Conference Speaker.</p>
-                            <p>Engineer @WalletConnect.</p>
+                            <p>Engineer @[REDACTED].</p>
                             <p>Elixir & Rust enthusiast.</p>
                         </div>
                     </div>
@@ -112,11 +117,9 @@ const BlogPost: NextPage<Params> = ({ post, contents, meta, view_count, read_tim
                             </script> */}
                         </div>
                     </div>
-                    <ReactMarkdown
-                        rehypePlugins={[rehypeRaw]}
-                        className={`prose max-w-none ${inter.className}`}>
-                        {contents}
-                    </ReactMarkdown>
+                    <article className={`prose max-w-none ${inter.className}`}>
+                        { Markdoc.renderers.react(content, React, { components }) }
+                    </article>
                 </div>
                 <footer className='w-full flex flex-col p-12 space-y-4 md:space-y-0 md:flex-row md:justify-between'>
                     <div className='flex flex-row space-x-6 text-gray-500'>
