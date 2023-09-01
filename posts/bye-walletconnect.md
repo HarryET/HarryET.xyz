@@ -12,7 +12,7 @@ published: true
 ---
 # Goodbye WalletConnect
 
-After 1.5 years, 3 job roles and 2 hackweeks I'm going to leaving WalletConnect.
+After 1.5 years, 3 job roles and 2 hackweeks I've left WalletConnect.
 
 Before I start, I'd like to preface this blog post by saying that I have - in my opinion - left on good terms with everyone at the company and hope to stay friends with many people I met there.
 
