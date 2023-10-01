@@ -161,9 +161,8 @@ const Home: NextPage<{ content: Content[] }> = ({ content }) => {
         <div id="intro" className='space-y-4'>
           <h1 className='text-4xl font-semibold'>Harry Bairstow</h1>
           <div className='text-gray-500 flex flex-col space-y-1 lg:flex-row lg:space-y-0 lg:space-x-4'>
-            <p>16.</p>
+            <p>17.</p>
             <p>Conference Speaker.</p>
-            <p>Engineer @[REDACTED].</p>
             <p>Elixir & Rust enthusiast.</p>
           </div>
         </div>
@@ -179,9 +178,9 @@ const Home: NextPage<{ content: Content[] }> = ({ content }) => {
         </div>
 
         <div id="jobs" className='w-full flex flex-col space-y-6 lg:space-y-0 lg:flex-row lg:justify-between'>
-          <Job img="/assets/jobs/soon.svg" company='REDACTED' title="Announcing Soon" />
+          <Job img="/assets/jobs/catpw.svg" link="https://catpowered.xyz" company='CatPowered Ltd' title="Research & Development" />
           {/* <Job img="/assets/jobs/v3x.svg" link="https://v3x.company" company='V3X Labs' title="Research & Development" /> */}
-          <Job img="/assets/jobs/swift.svg" link="https://swift.eco" company='Swift.eco' title="Staff Software Engineer" />
+          {/* <Job img="/assets/jobs/swift.svg" link="https://swift.eco" company='Swift.eco' title="Staff Software Engineer" /> */}
         </div>
 
         <div id="content" className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>

@@ -77,9 +77,8 @@ const BlogPost: NextPage<Params> = ({ post, contents, meta, view_count, read_tim
                     <div id="intro" className='space-y-4'>
                         <h1 className='text-4xl font-semibold'>Harry Bairstow</h1>
                         <div className='text-gray-500 flex flex-col space-y-1 lg:flex-row lg:space-y-0 lg:space-x-4'>
-                            <p>16.</p>
+                            <p>17.</p>
                             <p>Conference Speaker.</p>
-                            <p>Engineer @[REDACTED].</p>
                             <p>Elixir & Rust enthusiast.</p>
                         </div>
                     </div>
