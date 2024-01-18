@@ -20,7 +20,8 @@
     "react-highlight": "^0.14.0",
     "react-markdown": "^8.0.4",
     "reading-time-estimator": "^1.9.0",
-    "rehype-raw": "^6.1.1"
+    "rehype-raw": "^6.1.1",
+    "sharp": "^0.33.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.4",

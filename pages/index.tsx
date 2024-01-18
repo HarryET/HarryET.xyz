@@ -1,199 +1,83 @@
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
-import { JetBrains_Mono } from 'next/font/google'
-import * as fs from 'fs';
-import yaml from 'js-yaml'
-
-import papers from "../public/data/papers.json"
-import talks from "../public/data/talks.json"
-import { PostMeta } from './blog/[...post]';
+import type { NextPage } from 'next'
 import { NextSeo } from 'next-seo';
 
-const jb_mono = JetBrains_Mono({ subsets: ['latin'] })
-
-let generics: string[] = [];
-
-// Get a random unique generic image, if we run out of images, reset the list
-const randomGeneric = () => {
-  if (generics.length === 0) {
-    generics = [
-      "/assets/generic/1.jpeg",
-      "/assets/generic/2.jpeg",
-      "/assets/generic/3.jpeg",
-      "/assets/generic/4.jpeg",
-      "/assets/generic/5.jpeg",
-      "/assets/generic/6.jpeg",
-    ];
-  }
-
-  const index = Math.floor(Math.random() * generics.length);
-  const image = generics[index];
-  generics.splice(index, 1);
-  return image;
-}
-
-const Job: React.FC<{ img: string, link?: string, company: string, title: string }> = ({ img, company, title, link }) => {
-  return (
-    <div className='flex flex-row space-x-4'>
-      <img className="h-24 w-24" src={img} alt={`${company}'s logo`} />
-      <div className='h-24 flex flex-col justify-center space-y-2'>
-        { link ? <a href={link} className='text-lg font-semibold hover:cursor-pointer hover:underline'>{company}</a> : <h2 className='text-lg font-semibold'>{company}</h2> }
-        <p className='text-gray-500'>{title}</p>
-      </div>
-    </div>
-  )
-}
-
-
-const KindPill: React.FC<{ kind: "talk" | "blog" | "paper" }> = ({ kind }) => {
-  switch (kind) {
-    case "talk":
-      return (
-        <div className={`inline-flex items-center px-2 py-1 text-xs font-medium ring-1 ring-inset bg-fuchsia-500/20 text-fuchsia-500 ring-fuchsia-500/20`}>
-          {kind.toUpperCase()}
-        </div>
-      )
-    case "blog":
-      return (
-        <div className={`inline-flex items-center px-2 py-1 text-xs font-medium ring-1 ring-inset bg-blue-500/20 text-blue-500 ring-blue-500/20`}>
-          {kind.toUpperCase()}
-        </div>
-      )
-
-    case "paper":
-      return (
-        <div className={`inline-flex items-center px-2 py-1 text-xs font-medium ring-1 ring-inset bg-yellow-500/20 text-yellow-500 ring-yellow-500/20`}>
-          {kind.toUpperCase()}
-        </div>
-      )
-  }
-}
-
-const ContentEntry: React.FC<Content> = ({ image, title, author, link, kind }) => {
-  return (
-    <div className='w-full h-full relative'>
-      <a className='flex flex-col max-w-xl hover:cursor-pointer hover:bg-gray-50' href={link ?? undefined}>
-        <div className='relative w-full h-auto'>
-          <img className='w-full h-auto' src={image ?? randomGeneric()} />
-          <div className='absolute bottom-2 right-2 z-10'>
-            <KindPill kind={kind} />
-          </div>
-        </div>
-        <div className='h-full flex flex-col justify-between p-4'>
-          <div>
-            <h3>{title}</h3>
-            <p className='text-gray-500'>{author}</p>
-          </div>
-        </div>
-      </a>
-      {link == undefined && (<div className='absolute top-0 left-0 z-10 bg-opacity-50 bg-gray-800 text-red-500 font-bold text-xl w-full h-full flex justify-center items-center'>[PENDING]</div>)}
-    </div>
-  )
-}
-
-type Content = {
-  image?: string,
-  title: string,
-  author: string,
-  link?: string,
-  kind: "talk" | "blog" | "paper",
-  published_at: string,
-}
-
-const findContent = (): Content[] => {
-  let content: Content[] = []
-
-  for (const paper of papers) {
-    content.push({
-      image: paper.img_url,
-      title: paper.name,
-      author: "Harry Bairstow",
-      link: paper.download_url,
-      kind: "paper",
-      published_at: paper.published_at
-    })
-  }
-
-  for (const talk of talks) {
-    content.push({
-      image: talk.img_url,
-      title: talk.name,
-      author: "Harry Bairstow",
-      link: talk.url ?? undefined,
-      kind: "talk",
-      published_at: talk.date
-    })
-  }
-
-  fs.readdirSync("./posts").map((p) => [p.replace(".md", ""), fs.readFileSync(`./posts/${p}`, "utf8")]).map(([name, rawContents]) => {
-    const rawMeta = rawContents.split("---")[0];
-    const meta = yaml.load(rawMeta) as PostMeta;
-    const contents = rawContents.split("---")[1];
-
-    return [name, meta, contents] as [string, PostMeta, string]
-  }).filter(([_name, meta, _contents]) => meta.published).forEach(([name, meta, contents]) => {
-    content.push({
-      image: meta.image,
-      title: meta.title,
-      author: meta.author?.name ?? "Unknown Author",
-      link: `/blog/${name}`,
-      kind: "blog",
-      published_at: meta.date
-    })
-  })
-
-  return content.sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime())
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  const content = findContent()
-  return {
-    props: {
-      content
-    }
-  }
-}
-
-const Home: NextPage<{ content: Content[] }> = ({ content }) => {
+const Home: NextPage = ({ }) => {
   return (
     <>
       <NextSeo title='Harry Bairstow' />
-      <div className={`flex flex-col items-start p-12 space-y-12 text-gray-900 ${jb_mono.className}`}>
-        <div id="intro" className='space-y-4'>
-          <h1 className='text-4xl font-semibold'>Harry Bairstow</h1>
-          <div className='text-gray-500 flex flex-col space-y-1 lg:flex-row lg:space-y-0 lg:space-x-4'>
-            <p>17.</p>
-            <p>Conference Speaker.</p>
-            <p>Elixir & Rust enthusiast.</p>
+      <div className='w-full h-full px-6 py-3 flex flex-col justify-between'>
+        <main className='flex flex-col gap-6'>
+          <header className='w-full flex flex-row justify-between items-center'>
+            <div id='me'>
+              <h1 className='text-3xl'>Harry Bairstow.</h1>
+              <div className='flex flex-col gap-1 sm:flex-row sm:gap-2'>
+                <p>17.</p>
+                <p>Elixir & Rust enthusiast.</p>
+                <p>Conference Speaker.</p>
+                <p>Venture Research.</p>
+              </div>
+            </div>
+            <div id='menu'>
+              <a className='text-brand hover:cursor-pointer hover:underline' href='/photos'>Photos</a>
+            </div>
+          </header>
+          <div id='experience' className='max-w-4xl'>
+            <h1 className='text-2xl font-bold'>Experience.</h1>
+            <div className='flex flex-col gap-4'>
+              <div id='felicis'>
+                <div id='info' className='flex flex-col md:flex-row md:gap-2 text-lg'>
+                  <a className='text-[#FF7E00] hover:cursor-pointer hover:underline' href='https://felicis.com'>Felicis</a>
+                  <div className='flex flex-row gap-2'>
+                    <span className='hidden md:block'>•</span>
+                    <p>Dec 2023 <span>→</span> <span className='underline'>Present</span></p>
+                    <span>•</span>
+                    <p>Research Contractor</p>
+                  </div>
+                </div>
+                <div className='mt-2 px-3 py-1 text-center text-red-500 border-2 border-red-500 border-dashed'>
+                  IN PROGRESS
+                </div>
+              </div>
+              <div id='walletconnect'>
+                <div id='info' className='flex flex-col md:flex-row md:gap-2 text-lg'>
+                  <a className='text-[#5570FF] hover:cursor-pointer hover:underline' href='https://walletconnect.com'>WalletConnect</a>
+                  <div className='flex flex-col sm:flex-row sm:gap-2'>
+                    <span className='hidden md:block'>•</span>
+                    <p>Jun 2022 <span>→</span> Sep 2023</p>
+                    <span className='hidden sm:block'>•</span>
+                    <p>Distributed Systems Engineer</p>
+                  </div>
+                </div>
+                <p id='description' className='mt-2 text-gray-700'>
+                  I joined WalletConnect as an intern for the Summer of 2022 on the Cloud Team. While in this role I rolled-out a new authentication solution to support SIWE as well as retaining backwards compatibility with the existing authentication solution.
+                  After that I returned to college while continuing part-time and helping to found the new Rust team. In this role I worked on the core relay which powered 1,000,000+ concurrent websockets and distributed it across 3 different AWS regions.
+                  While working in this role I also wrote the protocol&apos;s <a className='text-brand hover:cursor-pointer hover:underline' href='https://github.com/walletconnect/echo-server'>push server implementation</a> in rust. I was also responsible for liaising with different customers of the push notification protocol from small wallets to Fortune 500 companies.
+                </p>
+              </div>
+              <div id='cbnexpert'>
+                <div id='info' className='flex flex-col md:flex-row md:gap-2 text-lg'>
+                  <a className='text-[#48a770] hover:cursor-pointer hover:underline' href='https://cbn.expert'>CBNExpert</a>
+                  <div className='flex flex-row gap-2'>
+                    <span className='hidden md:block'>•</span>
+                    <p>Jul 2022</p>
+                    <span>•</span>
+                    <p>Work Experience</p>
+                  </div>
+                </div>
+                <p id='description' className='mt-2 text-gray-700'>
+                  I spent 3 days working in person with the CBNExpert team; during this time I sat in on meetings with clients and helped to start a new product within their product suite.
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div id="images" className='w-full flex flex-row gap-6 overflow-x-scroll no-scrollbar'>
-          <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/paris_lift_polaroid.jpg' />
-          <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/ledger_vierzon.jpg' />
-          <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/prague_ens_booth.jpeg' />
-          <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/drone_northwhich.jpeg' />
-          <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/bru_plane.jpeg' />
-          <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/speaker_img.jpeg' />
-          <img className="h-48 md:h-52 lg:h-80 w-auto" src='/assets/bru_airport.jpeg' />
-        </div>
-
-        <div id="jobs" className='w-full flex flex-col space-y-6 lg:space-y-0 lg:flex-row lg:justify-between'>
-          <Job img="/assets/jobs/catpw.svg" link="https://catpowered.xyz" company='CatPowered Ltd' title="Research & Development" />
-          {/* <Job img="/assets/jobs/v3x.svg" link="https://v3x.company" company='V3X Labs' title="Research & Development" /> */}
-          {/* <Job img="/assets/jobs/swift.svg" link="https://swift.eco" company='Swift.eco' title="Staff Software Engineer" /> */}
-        </div>
-
-        <div id="content" className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {content.map((c, i) => <ContentEntry key={i} {...c} />)}
-        </div>
-
+        </main>
         <footer className='w-full flex flex-col space-y-4 md:space-y-0 md:flex-row md:justify-between'>
           <div className='flex flex-row space-x-6 text-gray-500'>
             <a href="https://github.com/harryet" className='hover:underline hover:cursor-pointer'>GitHub</a>
             <a href="https://twitter.com/theharryet" className='hover:underline hover:cursor-pointer'>Twitter</a>
             <a href="mailto:me@harryet.xyz" className='hover:underline hover:cursor-pointer'>Email</a>
           </div>
-          <p>&copy; 2023 Harry Bairstow</p>
+          <p>&copy; 2024 Harry Bairstow</p>
         </footer>
       </div>
     </>
