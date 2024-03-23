@@ -36,8 +36,8 @@ const Home: NextPage<{images: Image[]}> = ({ images }) => {
             </header>
             <ImagesGrid images={images} />
         </main>
-        <footer className='w-full flex flex-col space-y-4 md:space-y-0 md:flex-row md:justify-between'>
-          <div className='flex flex-row space-x-6 text-gray-500'>
+        <footer className='my-5 w-full flex flex-col space-y-4 md:space-y-0 md:flex-row md:justify-between'>
+          <div className='w-full md:w-min flex flex-row space-x-6 text-gray-500'>
             <a href="https://github.com/harryet" className='hover:underline hover:cursor-pointer'>GitHub</a>
             <a href="https://twitter.com/theharryet" className='hover:underline hover:cursor-pointer'>Twitter</a>
             <a href="mailto:me@harryet.xyz" className='hover:underline hover:cursor-pointer'>Email</a>
