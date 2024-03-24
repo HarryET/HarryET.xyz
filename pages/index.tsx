@@ -64,7 +64,7 @@ const Home: NextPage = ({ age, year, exams }: InferGetStaticPropsType<typeof get
               <br /><br /> Now that you know a bit about me, feel free to keep scrolling an take look into my experience and accolades.
             </div>
           </div>
-          <div id='experience' className='max-w-4xl'>
+          <div id='experience' className='max-w-4xl' style={{pageBreakBefore: "always"}}>
             <h1 className='text-2xl font-bold'>Experience.</h1>
             <div className='flex flex-col gap-4'>
               <div id='felicis'>
@@ -128,7 +128,7 @@ const Home: NextPage = ({ age, year, exams }: InferGetStaticPropsType<typeof get
               </div>
             </div>
           </div>
-          <div id='key-facts' className='max-w-4xl'>
+          <div id='key-facts' className='max-w-4xl' style={{pageBreakBefore: "always"}}>
             <h1 className='text-2xl font-bold'>Academics.</h1>
             <div className='flex flex-col gap-4'>
               <div id='sjd'>
@@ -190,7 +190,7 @@ const Home: NextPage = ({ age, year, exams }: InferGetStaticPropsType<typeof get
             </div>
           </div>
         </main>
-        <footer className='w-full py-6 flex flex-col space-y-4 md:space-y-0 md:flex-row md:justify-between'>
+        <footer className='w-full py-6 flex flex-col space-y-4 md:space-y-0 md:flex-row md:justify-between print:hidden'>
           <div className='flex flex-row space-x-6 text-gray-500'>
             <a href="https://github.com/harryet" className='hover:underline hover:cursor-pointer'>GitHub</a>
             <a href="https://twitter.com/theharryet" className='hover:underline hover:cursor-pointer'>Twitter</a>
